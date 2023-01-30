@@ -1,0 +1,25 @@
+type Query {
+  authors: [Author]
+}
+
+type Mutation {
+  createAuthor(createAuthorInput: CreateAuthorInput): Author
+}
+
+type Author {
+  id: Int
+  firstName: String
+  lastName: String
+  isActive: Boolean
+  email: String
+  birthdate: String
+  birthplace: String
+}
+
+input CreateAuthorInput {
+  firstName: String
+  lastName: String
+  email: String
+  birthdate: String
+  birthplace: String
+}
