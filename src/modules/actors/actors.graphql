@@ -1,0 +1,25 @@
+type Query {
+  actors: [Actor]
+}
+
+type Mutation {
+  createActor(createActorInput: CreateActorInput): Actor
+}
+
+type Actor {
+  id: Int
+  firstName: String
+  lastName: String
+  isActive: Boolean
+  email: String
+  birthdate: String
+  birthplace: String
+}
+
+input CreateActorInput {
+  firstName: String
+  lastName: String
+  email: String
+  birthdate: String
+  birthplace: String
+}

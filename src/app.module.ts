@@ -3,16 +3,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius';
 
-import { Author } from './modules/authors/author.model';
 import { join } from 'path';
 import { AuthorsModule } from './modules/authors/authors.module';
+import { ActorsModule } from './modules/actors/actors.module';
 
 @Module({
   imports: [
     AuthorsModule,
+    ActorsModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'localhost',
@@ -20,7 +20,6 @@ import { AuthorsModule } from './modules/authors/authors.module';
       username: 'postgres',
       password: 'superuser',
       database: 'force-elementaire-opiniatre',
-      // models: [Author],
       autoLoadModels: true,
       synchronize: true,
     }),
