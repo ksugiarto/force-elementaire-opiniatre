@@ -7,8 +7,8 @@ import { Author } from './author.model';
 export class AuthorsResolver {
   constructor(
     private readonly authorsService: AuthorsService
-  ) { }
-  
+  ) {}
+
   @Query('authors')
   async getAuthors() {
     return this.authorsService.findAll();

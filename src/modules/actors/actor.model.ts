@@ -3,7 +3,6 @@ import { Column, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class Actor extends Model {
-
   @Column({ type: INTEGER, primaryKey: true, autoIncrement: true })
   id: number;
 
@@ -24,7 +23,4 @@ export class Actor extends Model {
 
   @Column({ allowNull: true })
   birthplace: string;
-
-  // @Column
-  // movies: string[];
 }

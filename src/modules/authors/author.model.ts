@@ -1,10 +1,8 @@
-import { INTEGER } from 'sequelize';
 import { Column, Model, Table } from 'sequelize-typescript';
 
 @Table
 export class Author extends Model {
-
-  @Column({ type: INTEGER, primaryKey: true, autoIncrement: true })
+  @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 
   @Column
@@ -24,7 +22,4 @@ export class Author extends Model {
 
   @Column({ allowNull: true })
   birthplace: string;
-
-  // @Column
-  // movies: string[];
 }

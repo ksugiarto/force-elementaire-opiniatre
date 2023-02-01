@@ -8,11 +8,13 @@ import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius';
 import { join } from 'path';
 import { AuthorsModule } from './modules/authors/authors.module';
 import { ActorsModule } from './modules/actors/actors.module';
+import { MoviesModule } from './modules/movies/movies.module';
 
 @Module({
   imports: [
     AuthorsModule,
     ActorsModule,
+    MoviesModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'localhost',

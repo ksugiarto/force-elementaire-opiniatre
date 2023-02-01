@@ -1,0 +1,38 @@
+type Query {
+  movies: [Movie]
+  movie(id: Int!): Movie
+}
+
+type Mutation {
+  createMovie(createMovieInput: CreateMovieInput): Movie
+  updateMovie(
+    id: Int!,
+    updateMovieInput: CreateMovieInput
+  ): Movie
+  removeMovie(id: Int!): Int
+}
+
+type Movie {
+  id: Int
+  title: String
+  summary: String
+  genre: [String]
+  writtenBy: [Author]
+  starring: [Actor]
+  countryOrOrigin: String
+  runningTime: Int
+  distributor: String
+  releaseDate: String
+}
+
+input CreateMovieInput {
+  title: String!
+  summary: String!
+  genre: [String]
+  writtenBy: [Int]
+  starring: [Int]
+  countryOrOrigin: String
+  runningTime: Int
+  distributor: String
+  releaseDate: String
+}
