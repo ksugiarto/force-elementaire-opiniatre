@@ -1,9 +1,12 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { AuthorsService } from './authors.service';
 import { CreateAuthorDto } from './author.dto';
 import { Author } from './author.model';
+import { GqlAuthGuard } from 'src/common/guards/auth.guard';
 
 @Resolver('authors')
+@UseGuards(GqlAuthGuard)
 export class AuthorsResolver {
   constructor(
     private readonly authorsService: AuthorsService

@@ -6,7 +6,6 @@ import { MovieAuthor } from './movie-author.model';
 
 @Table
 export class Movie extends Model {
-
   @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 

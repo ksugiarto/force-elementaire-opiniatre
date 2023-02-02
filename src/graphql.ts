@@ -36,17 +36,11 @@ export class CreateMovieInput {
     releaseDate?: Nullable<string>;
 }
 
-export abstract class IQuery {
-    abstract actors(): Nullable<Nullable<Actor>[]> | Promise<Nullable<Nullable<Actor>[]>>;
-
-    abstract authors(): Nullable<Nullable<Author>[]> | Promise<Nullable<Nullable<Author>[]>>;
-
-    abstract movies(): Nullable<Nullable<Movie>[]> | Promise<Nullable<Nullable<Movie>[]>>;
-
-    abstract movie(id: number): Nullable<Movie> | Promise<Nullable<Movie>>;
-}
-
 export abstract class IMutation {
+    abstract signup(email: string, password: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract login(email: string, password: string): Nullable<LoginResponse> | Promise<Nullable<LoginResponse>>;
+
     abstract createActor(createActorInput?: Nullable<CreateActorInput>): Nullable<Actor> | Promise<Nullable<Actor>>;
 
     abstract createAuthor(createAuthorInput?: Nullable<CreateAuthorInput>): Nullable<Author> | Promise<Nullable<Author>>;
@@ -56,6 +50,21 @@ export abstract class IMutation {
     abstract updateMovie(id: number, updateMovieInput?: Nullable<CreateMovieInput>): Nullable<Movie> | Promise<Nullable<Movie>>;
 
     abstract removeMovie(id: number): Nullable<number> | Promise<Nullable<number>>;
+}
+
+export class LoginResponse {
+    token?: Nullable<string>;
+    user?: Nullable<User>;
+}
+
+export abstract class IQuery {
+    abstract actors(): Nullable<Nullable<Actor>[]> | Promise<Nullable<Nullable<Actor>[]>>;
+
+    abstract authors(): Nullable<Nullable<Author>[]> | Promise<Nullable<Nullable<Author>[]>>;
+
+    abstract movies(): Nullable<Nullable<Movie>[]> | Promise<Nullable<Nullable<Movie>[]>>;
+
+    abstract movie(id: number): Nullable<Movie> | Promise<Nullable<Movie>>;
 }
 
 export class Actor {
@@ -89,6 +98,10 @@ export class Movie {
     runningTime?: Nullable<number>;
     distributor?: Nullable<string>;
     releaseDate?: Nullable<string>;
+}
+
+export class User {
+    email?: Nullable<string>;
 }
 
 type Nullable<T> = T | null;

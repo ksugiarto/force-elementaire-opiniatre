@@ -1,9 +1,12 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { MoviesService } from './movies.service';
 import { Movie } from './movie.model';
 import { CreateMovieDto } from './movie.dto';
+import { GqlAuthGuard } from 'src/common/guards/auth.guard';
 
 @Resolver('movies')
+@UseGuards(GqlAuthGuard)
 export class MoviesResolver {
   constructor(
     private readonly moviesService: MoviesService
