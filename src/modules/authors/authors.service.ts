@@ -1,7 +1,10 @@
+// Generic Imports
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateAuthorDto } from './author.dto';
+
+// Model Imports
 import { Author } from './author.model';
+import { CreateAuthorDto } from './author.dto';
 
 @Injectable()
 export class AuthorsService {
@@ -9,14 +12,21 @@ export class AuthorsService {
     @InjectModel(Author) private authorModel: typeof Author,
   ) {}
   
+  /**
+   * Retrieve all Authors from database
+   */
   async findAll(): Promise<Author[]> {
     return this.authorModel.findAll();
   }
 
-  // TODO: Find One
+  // TODO: FindOne
 
+  /**
+   * Create new Author
+   * @param args
+   */
   async create(args: CreateAuthorDto): Promise<Author> {
-    console.log('== args:', args);
+    // Create the new Author
     const author = await this.authorModel.create({
       ...args
     });

@@ -3,8 +3,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-// Service Imports
+// User Related Imports
 import { UsersService } from 'src/modules/users/users.service';
+import { User } from 'src/modules/users/user.model';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
     private usersService: UsersService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<{ token: string, user: User }> {
     // Find user on the database
     const user = await this.usersService.findOne(email);
 

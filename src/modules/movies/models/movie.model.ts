@@ -1,8 +1,11 @@
-import { AllowNull, BelongsToMany, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
-import { Actor } from '../actors/actor.model';
-import { Author } from '../authors/author.model';
-import { MovieActor } from './movie-actor.model';
+// Generic Imports
+import { BelongsToMany, Column, DataType, Model, Table } from 'sequelize-typescript';
+
+// Model Imports
+import { Author } from '../../authors/author.model';
+import { Actor } from '../../actors/actor.model';
 import { MovieAuthor } from './movie-author.model';
+import { MovieActor } from './movie-actor.model';
 
 @Table
 export class Movie extends Model {

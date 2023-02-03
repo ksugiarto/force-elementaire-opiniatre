@@ -1,8 +1,10 @@
-/* eslint-disable prettier/prettier */
+// Generic Imports
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateActorDto } from './actor.dto';
+
+// Model Imports
 import { Actor } from './actor.model';
+import { CreateActorDto } from './actor.dto';
 
 @Injectable()
 export class ActorsService {
@@ -10,14 +12,21 @@ export class ActorsService {
     @InjectModel(Actor) private actorModel: typeof Actor,
   ) {}
   
+  /**
+   * Retrieve all Actors from database
+   */
   async findAll(): Promise<Actor[]> {
     return this.actorModel.findAll();
   }
 
   // TODO: Find One
 
+  /**
+   * Create new Actor
+   * @param args
+   */
   async create(args: CreateActorDto): Promise<Actor> {
-    console.log('== args:', args);
+    // Create the new Actor
     const actor = await this.actorModel.create({
       ...args
     });

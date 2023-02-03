@@ -1,14 +1,17 @@
+// Generic Imports
 import { Column, ForeignKey, Model, Table } from 'sequelize-typescript';
-import { Actor } from '../actors/actor.model';
+
+// Model Imports
 import { Movie } from './movie.model';
+import { Author } from '../../authors/author.model';
 
 @Table
-export class MovieActor extends Model {
+export class MovieAuthor extends Model {
   @ForeignKey(() => Movie)
   @Column
   movieId: number;
 
-  @ForeignKey(() => Actor)
+  @ForeignKey(() => Author)
   @Column
-  actorId: number;
+  authorId: number;
 }

@@ -1,8 +1,12 @@
+// Generic Imports
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Actor } from '../actors/actor.model';
+
+// Model Imports
+import { Movie } from './models/movie.model';
 import { Author } from '../authors/author.model';
-import { Movie } from './movie.model';
+import { Actor } from '../actors/actor.model';
+import { CreateMovieDto } from './movie.dto';
 
 @Injectable()
 export class MoviesService {
@@ -10,28 +14,47 @@ export class MoviesService {
     @InjectModel(Movie) private movieModel: typeof Movie
   ) {}
   
+  /**
+   * Retrieve all Movies from database
+   */
   async findAll(): Promise<Movie[]> {
-    return this.movieModel.findAll({ include: [Author, Actor] });
+    return await this.movieModel.findAll({ include: [Author, Actor] });
   }
 
+  /**
+   * Retrieve one Movie by ID
+   * @param id 
+   */
   async findOne(id: number): Promise<Movie> {
-    return this.movieModel.findByPk(id, { include: [Author, Actor] });
+    return await this.movieModel.findByPk(id, { include: [Author, Actor] });
   }
 
-  async create(args: any): Promise<Movie> {
+  /**
+   * Create new Movie
+   * @param title
+   * @param summary
+   */
+  async create(args: CreateMovieDto): Promise<Movie> {
+    // Create the new Movie
     const movie = await this.movieModel.create({
       ...args
     });
 
+    // Set the many to many documents
     await movie.$set('writtenBy', [...args.writtenBy]);
     await movie.$set('starring', [...args.starring]);
-
     await movie.save();
 
     return movie;
   }
 
-  async update(id: number, args: any): Promise<Movie> {
+  /**
+   * Update one Movie by ID
+   * @param title
+   * @param summary
+   */
+  async update(id: number, args: CreateMovieDto): Promise<Movie> {
+    // Check and find if the movie exist or not
     let movie = await this.movieModel.findByPk(id);
 
     if (!movie) {
@@ -41,14 +64,18 @@ export class MoviesService {
     movie.title = args.title;
     movie.summary = args.summary;
 
+    // Update the many to many documents
     await movie.$set('writtenBy', [...args.writtenBy]);
     await movie.$set('starring', [...args.starring]);
-
     await movie.save();
 
     return movie;
   }
 
+  /**
+   * Remove one Movie by ID
+   * @param id
+   */
   async remove(id: number): Promise<number> {
     return await this.movieModel.destroy({ where: { id } });
   }

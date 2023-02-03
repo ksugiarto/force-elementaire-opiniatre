@@ -13,7 +13,7 @@ export class UsersService {
   ) {}
 
   /**
-   * Find one User
+   * Retrieve one User
    * @param email 
    */
   async findOne(email: string): Promise<User | undefined> {
@@ -21,26 +21,22 @@ export class UsersService {
   }
 
   /**
-   * Create User method for Sign Up API
+   * Create new User method, used for Sign Up API
    * @param email 
    * @param password 
    */
-  async create(email: string, password: string): Promise<User> {
+  async create(email: string, password: string): Promise<User | undefined> {
     // Find existing user
     let user = await this.userModel.findOne({ where: { email } });
     if (user) {
       throw new BadRequestException(`User with email: ${email} already existed`);
     }
 
-    /**
-     * Construct new user if not exist,
-     * and hash the password
-     */
-    user = new this.userModel({
-      email,
-      hashedPassword: await bcrypt.hash(password, 10).then((r) => r)
-    });
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10).then((r) => r);
+    // Create new user
+    user = await this.userModel.create({ email, hashedPassword });
 
-    return await user.save();
+    return user;
   }
 }
