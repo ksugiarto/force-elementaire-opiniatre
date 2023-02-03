@@ -4,6 +4,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 
 // Guard Imports
 import { GqlAuthGuard } from 'src/common/guards/auth.guard';
+import { MovieGuard } from 'src/common/guards/movie.guard';
 
 // Model & DTO Imports
 import { Movie } from './models/movie.model';
@@ -32,6 +33,7 @@ export class MoviesResolver {
    * @param id 
    */
   @Query('movie')
+  @UseGuards(MovieGuard)
   async getMovie(
     @Args('id') id: number
   ) {
@@ -56,6 +58,7 @@ export class MoviesResolver {
    * @param args
    */
   @Mutation('updateMovie')
+  @UseGuards(MovieGuard)
   async update(
     @Args('id') id: number,
     @Args('updateMovieInput') args: CreateMovieDto
@@ -69,6 +72,7 @@ export class MoviesResolver {
    * @param id
    */
   @Mutation('removeMovie')
+  @UseGuards(MovieGuard)
   async remove(
     @Args('id') id: number
   ): Promise<number> {

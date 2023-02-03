@@ -49,7 +49,7 @@ export class ActorsService {
     // No need to check if actor exist again,
     // since we already use guard on resolver
 
-    // Find the existing actor,
+    // Find the existing actor
     let actor = await this.actorModel.findByPk(id);
 
     actor.firstName = args.firstName;

@@ -49,7 +49,7 @@ export class AuthorsService {
     // No need to check if author exist again,
     // since we already use guard on resolver
 
-    // Find the existing author,
+    // Find the existing author
     let author = await this.authorModel.findByPk(id);
 
     author.firstName = args.firstName;

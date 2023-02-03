@@ -45,7 +45,9 @@ export class AuthorsResolver {
    * @param args
    */
   @Mutation('createAuthor')
-  async create(@Args('createAuthorInput') args: CreateAuthorDto): Promise<Author> {
+  async create(
+    @Args('createAuthorInput') args: CreateAuthorDto
+  ): Promise<Author> {
     const author = await this.authorsService.create(args);
     return author;
   }

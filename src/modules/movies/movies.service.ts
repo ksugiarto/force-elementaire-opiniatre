@@ -31,8 +31,7 @@ export class MoviesService {
 
   /**
    * Create new Movie
-   * @param title
-   * @param summary
+   * @param args
    */
   async create(args: CreateMovieDto): Promise<Movie | undefined> {
     // Create the new Movie
@@ -40,7 +39,7 @@ export class MoviesService {
       ...args
     });
 
-    // Set the many to many documents
+    // Set the association documents
     await movie.$set('writtenBy', [...args.writtenBy]);
     await movie.$set('starring', [...args.starring]);
     await movie.save();
@@ -50,20 +49,25 @@ export class MoviesService {
 
   /**
    * Update one Movie by ID
-   * @param title
-   * @param summary
+   * @param id
+   * @param args
    */
   async update(id: number, args: CreateMovieDto): Promise<Movie | undefined> {
-    // Check and find if the movie exist or not
+    // No need to check if author exist again,
+    // since we already use guard on resolver
+
+    // Find the existing movie
     let movie = await this.movieModel.findByPk(id);
-    if (!movie) {
-      throw new BadRequestException('Movie is not found');
-    }
 
     movie.title = args.title;
     movie.summary = args.summary;
+    movie.genre = args.genre;
+    movie.countryOfOrigin = args.countryOfOrigin;
+    movie.runningTime = args.runningTime;
+    movie.distributor = args.distributor;
+    movie.releaseDate = args.releaseDate;
 
-    // Update the many to many documents
+    // Update the association documents
     await movie.$set('writtenBy', [...args.writtenBy]);
     await movie.$set('starring', [...args.starring]);
     await movie.save();
@@ -76,12 +80,8 @@ export class MoviesService {
    * @param id
    */
   async remove(id: number): Promise<number | undefined> {
-    // Check and find if the movie exist or not
-    let movie = await this.movieModel.findByPk(id);
-    if (!movie) {
-      throw new BadRequestException('Movie is not found');
-    }
-
+    // No need to check if author exist again,
+    // since we already use guard on resolver
     return await this.movieModel.destroy({ where: { id } });
   }
 }
