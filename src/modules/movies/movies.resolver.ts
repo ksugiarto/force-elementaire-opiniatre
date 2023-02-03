@@ -40,19 +40,20 @@ export class MoviesResolver {
 
   /**
    * Create new Movie
-   * @param title
-   * @param summary
+   * @param args
    */
   @Mutation('createMovie')
-  async create(@Args('createMovieInput') args: CreateMovieDto): Promise<Movie> {
+  async create(
+    @Args('createMovieInput') args: CreateMovieDto
+  ): Promise<Movie> {
     const movie = await this.moviesService.create(args);
     return movie;
   }
 
   /**
    * Update one Movie by ID
-   * @param title
-   * @param summary
+   * @param id
+   * @param args
    */
   @Mutation('updateMovie')
   async update(

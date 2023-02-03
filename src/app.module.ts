@@ -22,7 +22,6 @@ import { MoviesModule } from './modules/movies/movies.module';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         dialect: 'postgres',
-        // uri: process.env.DB_URL,
         uri: configService.get('DB_URL'),
         autoLoadModels: true,
         synchronize: true,

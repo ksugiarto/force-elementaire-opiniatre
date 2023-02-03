@@ -1,9 +1,15 @@
 type Query {
   actors: [Actor]
+  actor(id: Int!): Actor
 }
 
 type Mutation {
   createActor(createActorInput: CreateActorInput): Actor
+  updateActor(
+    id: Int!,
+    updateActorInput: UpdateActorInput
+  ): Actor
+  removeActor(id: Int!): Int
 }
 
 type Actor {
@@ -17,8 +23,17 @@ type Actor {
 }
 
 input CreateActorInput {
-  firstName: String
+  firstName: String!
   lastName: String
+  email: String
+  birthdate: String
+  birthplace: String
+}
+
+input UpdateActorInput {
+  firstName: String!
+  lastName: String
+  isActive: Boolean
   email: String
   birthdate: String
   birthplace: String

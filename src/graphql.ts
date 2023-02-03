@@ -9,8 +9,17 @@
 /* eslint-disable */
 
 export class CreateActorInput {
-    firstName?: Nullable<string>;
+    firstName: string;
     lastName?: Nullable<string>;
+    email?: Nullable<string>;
+    birthdate?: Nullable<string>;
+    birthplace?: Nullable<string>;
+}
+
+export class UpdateActorInput {
+    firstName: string;
+    lastName?: Nullable<string>;
+    isActive?: Nullable<boolean>;
     email?: Nullable<string>;
     birthdate?: Nullable<string>;
     birthplace?: Nullable<string>;
@@ -43,6 +52,10 @@ export abstract class IMutation {
 
     abstract createActor(createActorInput?: Nullable<CreateActorInput>): Nullable<Actor> | Promise<Nullable<Actor>>;
 
+    abstract updateActor(id: number, updateActorInput?: Nullable<UpdateActorInput>): Nullable<Actor> | Promise<Nullable<Actor>>;
+
+    abstract removeActor(id: number): Nullable<number> | Promise<Nullable<number>>;
+
     abstract createAuthor(createAuthorInput?: Nullable<CreateAuthorInput>): Nullable<Author> | Promise<Nullable<Author>>;
 
     abstract createMovie(createMovieInput?: Nullable<CreateMovieInput>): Nullable<Movie> | Promise<Nullable<Movie>>;
@@ -59,6 +72,8 @@ export class LoginResponse {
 
 export abstract class IQuery {
     abstract actors(): Nullable<Nullable<Actor>[]> | Promise<Nullable<Nullable<Actor>[]>>;
+
+    abstract actor(id: number): Nullable<Actor> | Promise<Nullable<Actor>>;
 
     abstract authors(): Nullable<Nullable<Author>[]> | Promise<Nullable<Nullable<Author>[]>>;
 

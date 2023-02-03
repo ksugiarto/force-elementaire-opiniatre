@@ -1,6 +1,9 @@
+// Generic Imports
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+
+// App Module Import
 import { AppModule } from './app.module';
 
 async function bootstrap() {

@@ -25,7 +25,7 @@ export class MoviesService {
    * Retrieve one Movie by ID
    * @param id 
    */
-  async findOne(id: number): Promise<Movie> {
+  async findOne(id: number): Promise<Movie | undefined> {
     return await this.movieModel.findByPk(id, { include: [Author, Actor] });
   }
 
@@ -34,7 +34,7 @@ export class MoviesService {
    * @param title
    * @param summary
    */
-  async create(args: CreateMovieDto): Promise<Movie> {
+  async create(args: CreateMovieDto): Promise<Movie | undefined> {
     // Create the new Movie
     const movie = await this.movieModel.create({
       ...args
@@ -53,10 +53,9 @@ export class MoviesService {
    * @param title
    * @param summary
    */
-  async update(id: number, args: CreateMovieDto): Promise<Movie> {
+  async update(id: number, args: CreateMovieDto): Promise<Movie | undefined> {
     // Check and find if the movie exist or not
     let movie = await this.movieModel.findByPk(id);
-
     if (!movie) {
       throw new BadRequestException('Movie is not found');
     }
@@ -76,7 +75,13 @@ export class MoviesService {
    * Remove one Movie by ID
    * @param id
    */
-  async remove(id: number): Promise<number> {
+  async remove(id: number): Promise<number | undefined> {
+    // Check and find if the movie exist or not
+    let movie = await this.movieModel.findByPk(id);
+    if (!movie) {
+      throw new BadRequestException('Movie is not found');
+    }
+
     return await this.movieModel.destroy({ where: { id } });
   }
 }

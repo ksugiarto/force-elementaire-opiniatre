@@ -1,10 +1,10 @@
 // Generic Imports
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
 // Model Imports
 import { Actor } from './actor.model';
-import { CreateActorDto } from './actor.dto';
+import { CreateActorDto, UpdateActorDto } from './actor.dto';
 
 @Injectable()
 export class ActorsService {
@@ -16,10 +16,16 @@ export class ActorsService {
    * Retrieve all Actors from database
    */
   async findAll(): Promise<Actor[]> {
-    return this.actorModel.findAll();
+    return await this.actorModel.findAll();
   }
 
-  // TODO: Find One
+  /**
+   * Retrieve one Actor by ID
+   * @param id 
+   */
+  async findOne(id: number): Promise<Actor | undefined> {
+    return await this.actorModel.findByPk(id);
+  }
 
   /**
    * Create new Actor
@@ -34,11 +40,36 @@ export class ActorsService {
     return actor;
   }
 
-  // TODO: Update
-  // async update(args: any): Promise<Actor> {
-  //   const actor = await this.actorModel.findByPk();
-  //   return actor;
-  // }
+  /**
+   * Update one Actor by ID
+   * @param id
+   * @param args
+   */
+  async update(id: number, args: UpdateActorDto): Promise<Actor | undefined> {
+    // No need to check if actor exist again,
+    // since we already use guard on resolver
 
-  // TODO: Delete
+    // Find the existing actor,
+    let actor = await this.actorModel.findByPk(id);
+
+    actor.firstName = args.firstName;
+    actor.lastName = args.lastName;
+    actor.isActive = args.isActive ?? actor.isActive;
+    actor.email = args.email;
+    actor.birthdate = args.birthdate;
+    actor.birthplace = args.birthplace;
+    await actor.save();
+
+    return actor;
+  }
+
+  /**
+   * Remove one Actor by ID
+   * @param id
+   */
+  async remove(id:number): Promise<number | undefined> {
+    // No need to check if actor exist again,
+    // since we already use guard on resolver
+    return await this.actorModel.destroy({ where: { id } });
+  }
 }

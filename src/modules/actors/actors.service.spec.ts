@@ -48,9 +48,8 @@ describe('ActorsService', () => {
           useValue: {
             findAll: jest.fn(() => actorsMock),
             findOne: jest.fn(),
+            findByPk: jest.fn(() => oneActorMock),
             create: jest.fn(() => oneActorMock),
-            remove: jest.fn(),
-            destroy: jest.fn(() => oneActorMock),
           },
         },
       ],
@@ -68,6 +67,14 @@ describe('ActorsService', () => {
     it('should return an array of actors', async () => {
       const actors = await service.findAll();
       expect(actors).toEqual(actorsMock);
+    });
+  });
+
+  describe('findOne()', () => {
+    it('should retrieve one single actor', () => {
+      const findActor = jest.spyOn(model, 'findByPk');
+      expect(service.findOne(1));
+      expect(findActor).toBeCalledWith(1);
     });
   });
 
@@ -93,23 +100,4 @@ describe('ActorsService', () => {
       expect(newActor).toEqual(oneActor);
     })
   });
-
-  // describe('findOne()', () => {
-  //   it('should retrieve one single actor', () => {
-  //     const findActor = jest.spyOn(model, 'findOne');
-  //     expect(service.findOne(1));
-  //     expect(findActor).toBeCalledWith({ where: { id: 1 } });
-  //   });
-  // });
-
-  // describe('delete()', () => {
-  //   it('should delete a actor', async () => {
-  //     const findActor = jest.spyOn(model, 'findOne').mockReturnValue({
-  //       destroy: jest.fn()
-  //     } as any);
-  //     const retVal = await service.remove(2);
-  //     expect(findActor).toBeCalledWith({ where: { id: 2 } });
-  //     expect(retVal).toBeUndefined();
-  //   });
-  // });
 });
