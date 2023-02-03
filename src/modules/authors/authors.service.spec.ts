@@ -48,9 +48,8 @@ describe('AuthorsService', () => {
           useValue: {
             findAll: jest.fn(() => authorsMock),
             findOne: jest.fn(),
+            findByPk: jest.fn(() => oneAuthorMock),
             create: jest.fn(() => oneAuthorMock),
-            remove: jest.fn(),
-            destroy: jest.fn(() => oneAuthorMock),
           },
         },
       ],
@@ -68,6 +67,14 @@ describe('AuthorsService', () => {
     it('should return an array of authors', async () => {
       const authors = await service.findAll();
       expect(authors).toEqual(authorsMock);
+    });
+  });
+
+  describe('findOne()', () => {
+    it('should retrieve one single author', () => {
+      const findAuthor = jest.spyOn(model, 'findByPk');
+      expect(service.findOne(1));
+      expect(findAuthor).toBeCalledWith(1);
     });
   });
 
@@ -93,23 +100,4 @@ describe('AuthorsService', () => {
       expect(newAuthor).toEqual(oneAuthor);
     })
   });
-
-  // describe('findOne()', () => {
-  //   it('should retrieve one single author', () => {
-  //     const findAuthor = jest.spyOn(model, 'findOne');
-  //     expect(service.findOne(1));
-  //     expect(findAuthor).toBeCalledWith({ where: { id: 1 } });
-  //   });
-  // });
-
-  // describe('delete()', () => {
-  //   it('should delete a author', async () => {
-  //     const findAuthor = jest.spyOn(model, 'findOne').mockReturnValue({
-  //       destroy: jest.fn()
-  //     } as any);
-  //     const retVal = await service.remove(2);
-  //     expect(findAuthor).toBeCalledWith({ where: { id: 2 } });
-  //     expect(retVal).toBeUndefined();
-  //   });
-  // });
 });

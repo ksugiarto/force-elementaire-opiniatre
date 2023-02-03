@@ -31,7 +31,7 @@ export class ActorsService {
    * Create new Actor
    * @param args
    */
-  async create(args: CreateActorDto): Promise<Actor> {
+  async create(args: CreateActorDto): Promise<Actor | undefined> {
     // Create the new Actor
     const actor = await this.actorModel.create({
       ...args

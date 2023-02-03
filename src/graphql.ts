@@ -33,6 +33,15 @@ export class CreateAuthorInput {
     birthplace?: Nullable<string>;
 }
 
+export class UpdateAuthorInput {
+    firstName: string;
+    lastName?: Nullable<string>;
+    isActive?: Nullable<boolean>;
+    email?: Nullable<string>;
+    birthdate?: Nullable<string>;
+    birthplace?: Nullable<string>;
+}
+
 export class CreateMovieInput {
     title: string;
     summary: string;
@@ -58,6 +67,10 @@ export abstract class IMutation {
 
     abstract createAuthor(createAuthorInput?: Nullable<CreateAuthorInput>): Nullable<Author> | Promise<Nullable<Author>>;
 
+    abstract updateAuthor(id: number, updateAuthorInput?: Nullable<UpdateAuthorInput>): Nullable<Author> | Promise<Nullable<Author>>;
+
+    abstract removeAuthor(id: number): Nullable<number> | Promise<Nullable<number>>;
+
     abstract createMovie(createMovieInput?: Nullable<CreateMovieInput>): Nullable<Movie> | Promise<Nullable<Movie>>;
 
     abstract updateMovie(id: number, updateMovieInput?: Nullable<CreateMovieInput>): Nullable<Movie> | Promise<Nullable<Movie>>;
@@ -76,6 +89,8 @@ export abstract class IQuery {
     abstract actor(id: number): Nullable<Actor> | Promise<Nullable<Actor>>;
 
     abstract authors(): Nullable<Nullable<Author>[]> | Promise<Nullable<Nullable<Author>[]>>;
+
+    abstract author(id: number): Nullable<Author> | Promise<Nullable<Author>>;
 
     abstract movies(): Nullable<Nullable<Movie>[]> | Promise<Nullable<Nullable<Movie>[]>>;
 

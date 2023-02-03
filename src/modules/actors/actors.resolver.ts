@@ -46,7 +46,6 @@ export class ActorsResolver {
    */
   @Mutation('createActor')
   async create(@Args('createActorInput') args: CreateActorDto): Promise<Actor> {
-    console.log('== args:', args);
     const actor = await this.actorsService.create(args);
     return actor;
   }
