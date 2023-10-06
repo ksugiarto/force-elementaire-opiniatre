@@ -1,0 +1,9 @@
+name: Super Linter
+
+on:
+  workflow_dispatch
+
+jobs:
+  super-linter:
+    name: Super-Linter
+    uses: super-linter/super-linter@v5.3.1
