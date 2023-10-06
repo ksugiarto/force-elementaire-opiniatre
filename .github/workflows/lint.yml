@@ -6,4 +6,7 @@ on:
 jobs:
   super-linter:
     name: Super-Linter
-    uses: super-linter/super-linter@v5.3.1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint code base
+        uses: super-linter/super-linter@v5.3.1
